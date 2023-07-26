@@ -1,14 +1,12 @@
 {
-  "name": "api-nutshell",
-  "version": "1.0.4",
+  "name": "@david0ql/api-nutshell",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/app.js",
   "author": {
     "name": "David Gómez"
   },
-  "bin": {
-    "api-nutshell": "dist/app.js"
-  },
+  "bin": "./dist/app.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/david0ql/api-nutshell.git"

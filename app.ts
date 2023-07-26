@@ -42,16 +42,12 @@ const generateFolders = () => {
       \`\`\`
     `);
 
-    execSync("yarn add express", { stdio: "inherit" });
-    execSync("yarn add dotenv", { stdio: "inherit" });
-    execSync("yarn add cors", { stdio: "inherit" });
+    execSync("yarn add express dotenv cors", { stdio: "inherit" });
+    execSync("yarn add nodemon -D", { stdio: "inherit" });
 
     if (useTypeScript) {
 
-      execSync("yarn add @types/express -D", { stdio: "inherit" });
-      execSync("yarn add @types/dotenv -D", { stdio: "inherit" });
-      execSync("yarn add @types/cors -D", { stdio: "inherit" });
-      execSync("yarn add @types/node -D", { stdio: "inherit" });
+      execSync("yarn add @types/express @types/dotenv @types/cors @types/node -D", { stdio: "inherit" });
 
       fs.writeFileSync("tsconfig.json", `{
         "compilerOptions": {
@@ -67,7 +63,6 @@ const generateFolders = () => {
 
     }
 
-    execSync("yarn add nodemon -D", { stdio: "inherit" });
 
     fs.writeFileSync("nodemon.json", `{
       "watch": ["src"],
