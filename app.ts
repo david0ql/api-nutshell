@@ -80,5 +80,6 @@ const generateFolders = () => {
     console.error("Error al generar la estructura de directorios:", err);
   }
 }
-
-generateFolders();
+if (require.main === module){
+  generateFolders();
+}
