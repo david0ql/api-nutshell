@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { execSync } from "child_process";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs";
