@@ -1,6 +1,6 @@
 {
   "name": "@david0ql/api-nutshell",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "license": "MIT",
   "main": "dist/app.js",
   "author": {

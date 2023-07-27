@@ -18,8 +18,9 @@ const generateFolders = () => {
 
     execSync("yarn init -y", { stdio: "inherit" });
 
-    fs.writeFileSync(".gitignore", "node_modules\n.env\nbuild\n");
+    fs.writeFileSync(".gitignore", "node_modules\n.env\nbuild\nyarn.locl\n");
     fs.writeFileSync(".env", "");
+    fs.writeFileSync(".env.template", "");
     fs.writeFileSync("README.md", "");
 
     fs.mkdirSync("src");
@@ -45,15 +46,26 @@ const generateFolders = () => {
     execSync("yarn add express dotenv cors", { stdio: "inherit" });
     execSync("yarn add nodemon -D", { stdio: "inherit" });
 
+    const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
+
+    packageJson.main = `./dist/app.js`;
+
+    packageJson.scripts = {
+      start: "node ./src/app.js",
+      dev: "nodemon ./src/app.js",
+    };
+
+    fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
+
     if (useTypeScript) {
 
-      execSync("yarn add @types/express @types/dotenv @types/cors @types/node -D", { stdio: "inherit" });
+      execSync("yarn add concurrently @types/express @types/dotenv @types/cors @types/node -D", { stdio: "inherit" });
 
       fs.writeFileSync("tsconfig.json", `{
         "compilerOptions": {
           "target": "es6",
           "module": "commonjs",
-          "outDir": "./build",
+          "outDir": "./dist",
           "strict": true,
           "esModuleInterop": true,
           "skipLibCheck": true,
@@ -61,14 +73,15 @@ const generateFolders = () => {
         }
       }`);
 
+      packageJson.scripts = {
+        start: "node ./dist/app.js",
+        dev: "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
+        build: "npx tsc",
+      };
+
+      fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
+
     }
-
-
-    fs.writeFileSync("nodemon.json", `{
-      "watch": ["src"],
-      "ext": "${extension}",
-      "exec": "ts-node src/app.${extension}"
-    }`);
     
     execSync("git init", { stdio: "inherit" });
 
